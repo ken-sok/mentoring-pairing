@@ -15,7 +15,10 @@ def controller():
     mentees_ranking = mentee_rank_mentor(mentors, mentees)
 
     #group mentees into groups of 3 
-    grouping_mentees(mentees_ranking, mentors)
+    group = grouping_mentees(mentees_ranking, mentors)
+    
+    #export to csv file 
+    export_to_csv(group)
     
 
 def mentors_interest(): 
@@ -80,36 +83,7 @@ def mentee_rank_mentor(mentors, mentees):
     #print(mentees['Hung'])
     # dictionary to record the scores all mentees for each mentor
     all_mentor_scores = dict()
-    '''
-    for mentee in mentees: 
 
-        # dictionary to store 1 mentee's score
-        scores_one_mentee = dict()
-        
-        for mentor in mentors: 
-
-            sum_scores_one_mentor = 0
-
-            # there are 7 options of interest choice
-            for rank in range(1, 8): 
-                
-                # add up scores for each mentor for 1 mentee
-
-                # in case of "Hung" and "haodong" there are rankings missing due to duplicate rank
-                
-                if str(rank) in mentees[mentee]: 
-                    if (mentees[mentee][str(rank)].lower() in mentors[mentor].lower()):
-                        sum_scores_one_mentor += rank
-                                            
-            # final score for mentor by mentee
-            scores_one_mentee[mentor] = sum_scores_one_mentor 
-
-        # sort mentors with lowest score to the front 
-        sorted_dict = dict(sorted(scores_one_mentee.items(), key=operator.itemgetter(1), reverse=False))
-        
-        # collate all students' rankings
-        all_student_scores[mentee] = sorted_dict
-    '''
 
     for mentor in mentors: 
 
@@ -164,6 +138,21 @@ def grouping_mentees(ranking, mentors):
 
     
         group_of_threes[mentor] = one_mentor_group
-
     
+    return group_of_threes
+    
+def export_to_csv(group):
+    '''
+    export results to csv file 
+    '''
+
+    export_path = r"C:\Users\khean\Desktop\\"
+    with open(export_path+"groups"+".csv", "w", newline="", encoding="utf-8") as csv_file:
+        cols = ["mentors", "mentees"]
+        writer = csv.writer(csv_file)
+        writer.writerow(cols)
+        writer.writerows(group.items())
+        
+            
+
 controller()
