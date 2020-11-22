@@ -1,3 +1,12 @@
+r'''
+File: pairing.py
+Project: pairing-mentorship-program
+File Created: Saturday, 21st Nov 2020 
+Author: Chhaikheang Sok (chhaikheang.sok@gmail.com)
+-----
+Copyright © 2020
+'''
+
 import csv
 import operator
 
@@ -75,9 +84,9 @@ def mentees_interest():
 def mentee_rank_mentor(mentors, mentees): 
     
     ''' 
-        use mentees' ranking of interest to create a score they would give to mentors
-        outputs a dictionary of mentors' name as key and value as mentee names and their ranking as points sorted ascending
-        lower score is the most preferred mentor for the mentee
+    use mentees' ranking of interest to create a score they would give to mentors
+    outputs a dictionary of mentors' name as key and value as mentee names and their ranking as points sorted ascending
+    lower score is the most preferred mentor for the mentee
     '''
 
     #print(mentees['Hung'])
@@ -142,6 +151,7 @@ def grouping_mentees(ranking, mentors):
     return group_of_threes
     
 def export_to_csv(group):
+    
     '''
     export results to csv file 
     '''
