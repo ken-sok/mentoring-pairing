@@ -5,6 +5,18 @@ import operator
 this script is to provide suggested groups for meetings in the mentorship program 
 by pairing participants according to area of interests
 '''
+def controller(): 
+    
+    # get info on mentors and mentees
+    mentors = mentors_interest()
+    mentees = mentees_interest()
+    
+    #get mentees ranking of mentors
+    mentees_ranking = mentee_rank_mentor(mentors, mentees)
+
+    #group mentees into groups of 3 
+    grouping_mentees(mentees_ranking, mentors)
+    
 
 def mentors_interest(): 
 
@@ -44,8 +56,12 @@ def mentees_interest():
                 one_student_rankings = dict()
                 for i in range(11, 18): 
 
+                    if row[i] not in one_student_rankings: 
+                        one_student_rankings[row[i]] = all_cols[i]
                     
-                    one_student_rankings[row[i]] = all_cols[i]
+                    # to cover for the case when mentees rank the same for at least 2 interest 
+                    else: 
+                        one_student_rankings[row[i]] = one_student_rankings[row[i]] + ' ' + all_cols[i]
                     
                 # column 5 is the name of the mentee
                 mentees_interest_dict[f'{row[5]}'] = one_student_rankings
@@ -54,20 +70,17 @@ def mentees_interest():
     
     return mentees_interest_dict
 
-def mentee_rank_mentor(): 
+def mentee_rank_mentor(mentors, mentees): 
     
-    # use mentees' ranking of interest to create a score they would give to mentors
-    # lower score is the most preferred mentor for the mentee
-    # outputs a dictionary of students' name as key and value as mentor names and their points sorted ascending
+    ''' 
+        use mentees' ranking of interest to create a score they would give to mentors
+        lower score is the most preferred mentor for the mentee
+        outputs a dictionary of students' name as key and value as mentor names and their points sorted ascending
+    '''
 
-    # get info on mentors and mentees
-    mentors = mentors_interest()
-    mentees = mentees_interest()
-    
-    print(mentees['Hung'])
+    #print(mentees['Hung'])
     # dictionary to record the scores all mentees for each mentor
     all_student_scores = dict()
-    
     
     for mentee in mentees: 
 
@@ -76,7 +89,6 @@ def mentee_rank_mentor():
         
         for mentor in mentors: 
 
-            
             sum_scores_one_mentor = 0
 
             # there are 7 options of interest choice
@@ -84,9 +96,9 @@ def mentee_rank_mentor():
                 
                 # add up scores for each mentor for 1 mentee
 
-                # in case of "Hung" and "haodong" there is a ranking missing 
-                # fixing later
-                if mentee not in 'Hung haodong': 
+                # in case of "Hung" and "haodong" there are rankings missing due to duplicate rank
+                
+                if str(rank) in mentees[mentee]: 
                     if (mentees[mentee][str(rank)].lower() in mentors[mentor].lower()):
                         sum_scores_one_mentor += rank
                                             
@@ -98,5 +110,24 @@ def mentee_rank_mentor():
         
         # collate all students' rankings
         all_student_scores[mentee] = sorted_dict
+
+    return all_student_scores
     
-mentee_rank_mentor()
+
+
+def grouping_mentees(ranking, mentors): 
+    
+    '''
+    group mentees into mentor group by selecting the students who has sets the lowest scores for the mentors
+    '''
+
+    
+    for mentor in mentors: 
+
+        # find the students with three lowest scores in ranking dictionary
+        for mentee in ranking: 
+
+            
+    
+    #print('Sevri' in list(ranking['Nicholas'].items())[0])
+controller()
