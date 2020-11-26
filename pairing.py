@@ -45,7 +45,7 @@ def mentors_interest():
 
                 # column 5 is the name of the mentor
                 # column 8 is the interests of the mentor 
-                mentors_interest_dict[f'{row[5]}'] = row[8].lower()
+                mentors_interest_dict[f'{row[5]} ({row[7]})'] = row[8].lower()
                 line_count += 1
 
     return mentors_interest_dict
@@ -75,7 +75,7 @@ def mentees_interest():
                     
                   
                 # column 5 is the name of the mentee
-                mentees_interest_dict[f'{row[5]}'] = one_student_rankings
+                mentees_interest_dict[f'{row[5]} ({row[7]})'] = one_student_rankings
                 
                 line_count += 1
     
@@ -89,7 +89,7 @@ def mentee_rank_mentor(mentors, mentees):
     lower score is the most preferred mentor for the mentee
     '''
 
-    #print(mentees['Hung'])
+    
     # dictionary to record the scores all mentees for each mentor
     all_mentor_scores = dict()
 
