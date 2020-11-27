@@ -156,7 +156,7 @@ def export_to_csv(group):
     export results to csv file 
     '''
 
-    export_path = r"C:\Users\khean\Desktop\\"
+    export_path = path
     with open(export_path+"groups"+".csv", "w", newline="", encoding="utf-8") as csv_file:
         cols = ["mentors", "mentees"]
         writer = csv.writer(csv_file)
